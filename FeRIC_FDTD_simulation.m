@@ -47,7 +47,7 @@ mesh_box.start = [-0.030 -0.030 -0.010];
 mesh_box.stop  = [+0.030 +0.030 +0.010];
 mesh_box.resolution = 0.0005;
 
-Air_Box = 0.250;      % Size of the surrounding air box (150mm)
+Air_Box = 0.150;      % Size of the surrounding air box (150mm)
 
 %% Setup Simulation Parameters
 FDTD = InitFDTD( 'EndCriteria', 5e-7, 'CellConstantMaterial', 0);
