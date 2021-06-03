@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Author: Victor Han
-% Last Modified: 6/25/20
+% Last Modified: 6/3/21
 % Based on: http://openems.de/index.php/Tutorial:_MRI_Loop_Coil
 %
 % This code simulates the magnetic and electric fields of a two-layer
@@ -24,12 +24,18 @@
 % Tested with
 %  - openEMS v0.0.35
 %  - Matlab R2019a
+%  - Windows 10
 
 close all
 clear
 clc
 
 %% General Setup
+simulate_kHz = false; % Choose to do a simulation at 465 kHz or 180 MHz
+                      % Note that the kHz simulation takes many hours while
+                      % the MHz one takes ~10 minutes due to the kHz
+                      % simulation being on a much longer timescale.
+
 physical_constants; % Sets some physical constants in SI units
 unit = 1; % Sets length scale to meters
 B_norm = 12e-6; % Sets magnetic field strength in center of simulation in Tesla
@@ -43,18 +49,29 @@ visualize_box.stop  = [0.1 0.1 0.1];
 % computational power and a higher resolution for more accuracy and finer
 % details.
 
-mesh_box.start = [-0.030 -0.030 -0.010];
+mesh_box.start = [-0.030 -0.030 -0.010]; 
 mesh_box.stop  = [+0.030 +0.030 +0.010];
 mesh_box.resolution = 0.0005;
 
-Air_Box = 0.150;      % Size of the surrounding air box (150mm)
+Air_Box = 0.250;      % Size of the surrounding air box (150mm)
 
 %% Setup Simulation Parameters
-FDTD = InitFDTD( 'EndCriteria', 5e-7, 'CellConstantMaterial', 0);
+FDTD = InitFDTD( 'NrTS', 6000000, 'EndCriteria', 1e-8, 'CellConstantMaterial', 0);
 
-% Define excitation signal pulse
-f0 = 180e6; % Center frequency
-fc = 170e6; % 20 dB corner frequency
+% Define excitation signal pulse. Change these values to change simulated
+% frequency. f0 is the frequency at which fields are calculated later, and
+% fc determines the shape of the time-domain pulse. Note that because this
+% is a time-domain simulation method, lower frequencies lead to longer
+% time-domain pulses and thus often much longer simulation times for the
+% same geometry.
+if simulate_kHz
+    f0 = 465e3; % Center frequency
+    fc = 600e3; % 20 dB corner frequency
+else
+    f0 = 180e6; % Center frequency
+    fc = 200e6; % 20 dB corner frequency
+end
+
 FDTD = SetGaussExcite( FDTD, f0, fc );
 
 % Setup boundary conditions
