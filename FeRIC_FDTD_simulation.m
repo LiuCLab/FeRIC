@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Author: Victor Han
-% Last Modified: 6/3/21
+% Last Modified: 8/24/21
 % Based on: http://openems.de/index.php/Tutorial:_MRI_Loop_Coil
 %
 % This code simulates the magnetic and electric fields of a two-layer
@@ -38,7 +38,6 @@ simulate_kHz = false; % Choose to do a simulation at 465 kHz or 180 MHz
 
 physical_constants; % Sets some physical constants in SI units
 unit = 1; % Sets length scale to meters
-B_norm = 12e-6; % Sets magnetic field strength in center of simulation in Tesla
 
 % Set the box size for saving and visualizing the fields
 visualize_box.start = [-0.1 -0.1 -0.1];
@@ -67,9 +66,11 @@ FDTD = InitFDTD( 'NrTS', 6000000, 'EndCriteria', 1e-8, 'CellConstantMaterial', 0
 if simulate_kHz
     f0 = 465e3; % Center frequency
     fc = 600e3; % 20 dB corner frequency
+    B_norm = 31e-6; % Sets magnetic field strength in center of simulation in Tesla
 else
     f0 = 180e6; % Center frequency
     fc = 200e6; % 20 dB corner frequency
+    B_norm = 1.6e-6; % Sets magnetic field strength in center of simulation in Tesla
 end
 
 FDTD = SetGaussExcite( FDTD, f0, fc );
