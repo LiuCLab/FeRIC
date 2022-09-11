@@ -1,14 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% FeRIC Coil Magnetic and Electric Field Simulation
+% FeRIC Coil Magnetic and Electric Field Simulation With Patch Clamp
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Author: Victor Han
 % Last Modified: 9/11/22
 % Based on: http://openems.de/index.php/Tutorial:_MRI_Loop_Coil
 %
-% This code simulates the magnetic and electric fields of a two-layer
-% solenoid coil with a saline solution dish inside. All units are SI
-% (Tesla, V/m, meter, etc).
+% This code simulates the magnetic and electric fields of a one-layer
+% solenoid coil with a saline solution inside with patch-clamp wires. 
+% All units are SI (Tesla, V/m, meter, etc).
 %
 % Please first install openEMS
 % (https://openems.de/index.php/OpenEMS#Installation). Then, simply run
